@@ -1,1 +1,1 @@
-# errors-graph-gamblers-ruin
+# Gamblers ruin plots with errors
