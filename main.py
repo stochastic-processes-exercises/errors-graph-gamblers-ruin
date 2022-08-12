@@ -20,8 +20,8 @@ def sample_mean(start,n,p,m) :
   eee = np.sqrt(var/m)*scipy.stats.norm.ppf(0.95)
   return mean, eee
 
-x, y, error = np.linspace(0.1,0.9,9), np.zeros(9), np.zeros(9)
-for i in range(1,10) : y[i-1], error[i-1] = sample_mean(5,10,i*0.1,200)
+x, y, error = np.linspace(0.3,0.7,5), np.zeros(5), np.zeros(5)
+for i in range(3,8) : y[i-3], error[i-3] = sample_mean(2,4,i*0.1,200)
 
 plt.errorbar( x, y, yerr=error, fmt='ko' )
 plt.xlabel("Probability of winning each game")
