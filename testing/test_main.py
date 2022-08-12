@@ -7,16 +7,12 @@ except:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "AutoFeedback"])
     from AutoFeedback.plotchecks import check_plot
  
+from AutoFeedback.varchecks import check_vars
 from AutoFeedback.funcchecks import check_func          
 from AutoFeedback.randomclass import randomvar
 from AutoFeedback.plotclass import line
 import unittest
 from main import *
-
-class errclass :
-   def get_error(i) :
-       from scipy.stats import norm
-       return ( error[i] / norm.ppf(0.95) )**2
 
 class UnitTests(unittest.TestCase) :
     def test_plot(self) : 
@@ -39,13 +35,10 @@ class UnitTests(unittest.TestCase) :
         assert(check_plot([line1],explabels=axislabels,explegend=False,output=True))
 
     def test_errors(self) :
-        n, s = 10, 5
-        inputs, variables = [], []
+        n, s, prob = 10, 5, np.zeros(9)
         for s in range(1,10) :
             rat = (1-s*0.1) / (s*0.1)
-            if( s==5 ) : prob = ( n - s ) / n
-            else : prob = ( rat**s - rat**n ) / ( 1 - rat**n )
-            inputs.append((s-1,))
-            myvar = randomvar( prob, dist="chi2", variance=prob*(1-prob)/200, isinteger=False)
-            variables.append( myvar )
-        assert( check_func("get_error", inputs, variables, modname=errclass ) )
+            if( s==5 ) : prob[s-1] = ( n - s ) / n
+            else : prob[s-1] = ( rat**s - rat**n ) / ( 1 - rat**n )
+        myvar = randomvar( prob, variance=prob*(1-prob)/200,  dist="chi2", dof=199, limit=0.9, isinteger=[False,False,False,False,False,False,False,False,False] )
+        assert( check_vars("error", myvar) )
