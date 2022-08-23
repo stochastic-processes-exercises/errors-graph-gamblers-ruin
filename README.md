@@ -7,12 +7,12 @@ For each of these values of `p` you should estimate the probablity of ruin by si
 
 I have written the following plot commands in the `main.py` for you:
 
-````
+```python
 plt.errorbar( x, y, yerr=error, fmt='ko' )
 plt.xlabel("Probability of winning each game")
 plt.ylabel("Probability of ruin")
 plt.savefig("graph.png")
-````
+```
 
 Notice that you need to set the elements of the NumPy array called `error` equal to the width of the 90% confidence limit in order to pass the test.  This variable needs to be present and set in order to pass the tests as I check for its existence.
 
